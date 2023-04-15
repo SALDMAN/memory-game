@@ -2,9 +2,7 @@
 ;exit - timer of 30 seconds
 proc timer
 	doPush ax,bx,cx,es
-    mov ax, 40h
-	mov es, ax
-	mov ax, [Clock]
+    taketime
 FirstTick: 
 	cmp ax, [Clock]
 	je FirstTick
@@ -25,48 +23,18 @@ cont:
 	ret
 endp timer
 
-proc 	printNumber
-; enter – number in al
-; exit – printing the numbers digit by digit
-         doPush ax,bx,dx
-	    mov bx,offset divisorTable
-nextDigit:
-    	xor ah,ah         		
-    	div [byte ptr bx]   	;al = quotient, ah = remainder
-    	add al,'0'
-    	call printCharacter  	;Display the quotient
-    	mov al,ah          		;ah = remainder
-	    add bx,1            		;bx = address of next divisor
-    	cmp [byte ptr bx],0 	;Have all divisors been done?
-        jne nextDigit
-    	doPop dx,bx,ax
-	    ret
-endp 	printNumber
-
-proc printCharacter
-; enter – character in al
-; exit – printing the character
-	doPush ax,dx
-	mov ah,2
-	mov dl, al
-	int 21h
-	doPop dx,ax
-	ret
-endp printCharacter
-
-; 1secons only
+;enter - numbers of clock multi seconds seconds minutses hours
+;exit - timer for 10 seconds
 proc timer2
 	doPush ax,es,cx
-    mov ax, 40h
-	mov es, ax
-	mov ax, [Clock]
+    taketime
 FirstTick2: 
 	cmp ax, [Clock]
 	je FirstTick2
 	; print start message
 	
 	; count 10 sec
-	mov cx,182 ;182x0.055=10+ seconds
+	mov cx,182 ;182*0.055=10 seconds
 DelayLoop2:
 	mov ax,[Clock]
 Tick2:

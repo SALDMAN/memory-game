@@ -8,36 +8,56 @@ CODESEG
     include "words.asm"
 	include "tmonot.asm"
 	include "time.asm"
+	include "music.asm"
 start:
 	mov ax, @data
 	mov ds, ax
 	mov es,ax
 	MoveGrafic ;move to graphic mode
+	
 open_screen:
 	call mainscreen;call to the first
     mov ah,7h
     int 21h
-    cmp al,0dh
+	;check if he want the instraction screen
+    cmp al,'i'
     je instraction_screen
+	cmp al,'I'
+    je instraction_screen
+	;check if he want to start the game
     cmp al,'p'
 	je play
 	cmp al,'P'
     je play
+	;check if he want to quit
+	cmp al,1bh
+    je exitt
 	jmp start
 instraction_screen:
-     call instractionscreen
-	 mov ah,7h
-	 int 21h
-	 cmp al,1bh
-	 je open_screen
-	 jmp instraction_screen
+    call instractionscreen
+	mov ah,7h
+	int 21h
+	cmp al,1bh
+    je open_screen
+    jmp instraction_screen
+loose:
+    call losescreen
+	mov ah,7h
+	int 21h
+	cmp al,0dh
+    je open_screen
+    jmp loose	
 play:
     ;clear the screen 
 	MoveGrafic
+	mov dx, offset massage
+	mov ah,9h
+	int 21h
 	;get a random word
     call generateword
 	cmp [wrong],1
 	je play
+	
 	
 	mov dx, offset StartMessage2
 	mov ah,9h
@@ -59,6 +79,9 @@ play:
 	takeTime
 	mov [oldTime], ax
 	mov [ticks], 546;546*0.055=30 seconds
+	jmp userInput
+exitt:
+    jmp exit
 userInput:
 	
 	takeTime
@@ -71,8 +94,9 @@ userInput:
 	;checks if the time has reched 0
 	
 input:
-    MoveGrafic
+    
 	call get_input
+	mov [wrong],0
 	cmp [pressEnter], 2	; press esc
 	je exit
 	cmp [pressEnter], 1 ; press enter
@@ -80,12 +104,34 @@ input:
 	
 	call check_word
 	cmp [correct], 1
-	je userInput
+	je  not_gussed
+	jmp currect
+
+not_gussed:
+    mov [wrong],1
+	mov [pressEnter],0
+	mov [count],1
+	jmp userInput
+currect:
+    ;check if he got wrong somewhere
+ 	cmp [count],0
+	je check
+	;if he had failed the combo reset to zero
+	mov [combo],0
+	mov [count],0
+    jmp play
+check:
+    ;check if he did gussed 5 words in a row
+	inc [combo]
+	cmp [combo],5
+	je suprise
+    jmp play
+suprise:
+    call music
+	;reset the combo back to 0
+	mov [combo],0
 	jmp play
-loose:
-    call losescreen
 exit:
-    wait_for_key_pressed 
     return_to_text_mode
 	mov ax,4c00h
 	int 21h
