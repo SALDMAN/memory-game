@@ -12,11 +12,12 @@ RandLoop:
 	xor bl, bh 			    ; xor memory and counter
 	and bl, 00011111b 		; leave result between 0-31
 	
-    shl bx,1
-	xor bh, bh
+    ;check if the word repeat it self
+    cmp [was],bl
+    je endr	
 	
-	cmp bx,31
-	ja again;if the random number is above 31
+	;cmp bx,31
+	;ja again;if the random number is above 31
 	
 	call get_length;to get the length of the random word 	
 	call print_Word;to print the random word
@@ -136,7 +137,7 @@ case13:
 	  mov [choose],13
 	  jmp endl
 elseiff:
-     cmp bl,13
+    cmp bl,13
 	je case14
 	cmp bl,14
 	je case15
