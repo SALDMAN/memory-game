@@ -36,7 +36,6 @@
 	EndMessage 	db 13,10,'...Stop.',13,10,'$'
 	StartMessage2 db 13,10,'counting 10 seconds. start...',13,10,'$'
     counter db 0
-	points db 0
 	Clock equ es:6Ch
 	word1  db "hello there$"
 	word2  db "Incomprehensibility$"
@@ -55,7 +54,7 @@
 	word15 db "nincompoop$"
 	word16 db "phalanges$"
 	word17 db "taradiddle$"
-	word18 db "macaronic$"
+	word18 db "macaronic$";
 	word19 db "absquatulate$"
 	word20 db "batholith$"
 	word21 db "godwottery$"
@@ -63,7 +62,7 @@
 	word23 db "impignorate$"
 	word24 db "everywhen$"
 	word25 db "widdershins$"
-	word26 db "collywobbles$"
+	word26 db "collywobbles$";
 	word27 db "abibliophobia$"
 	word28 db "impignorate$"
 	word29 db "bumbershoot$"
@@ -73,6 +72,9 @@
 	choose db 0
     String db 100 dup(?)
 	countSt	db 0
+	scoreTable					db 'name.txt',0
+	bestScore					db 3 dup (?)
+	currentFile					dw ?
 	pressEnter db 0 ; 0-no enter, 1=enter
 	selectedWord dw ?
 	seletedWordLen	db ?
@@ -84,3 +86,19 @@
 	note  dw 0ac9h; 1193180/432-> (hex)
 	tell db 13,10,'wrong try again...',13,10,'$'
 	was  db 33 ; a very big num for the begining because the random is bettwen 0-31
+	points dw 0
+	;Points Variables
+	isSameColor	db 0
+	gamePoints	dw 0
+	bestPoints	dw 0
+	x			db ?	; Column
+	y		    db ?	; Row
+  currentPoints dw 0
+  currentPointsColor db ?
+	digitsCount	db 0
+	tempPoints	dw 0
+	
+	; Score Table Variables
+	firstPlace	db 0
+	secondPlace db 0
+	thirdPlace	db 0

@@ -9,6 +9,7 @@ CODESEG
 	include "tmonot.asm"
 	include "time.asm"
 	include "music.asm"
+	include "score.asm"
 start:
 	mov ax, @data
 	mov ds, ax
@@ -17,6 +18,7 @@ start:
 	
 open_screen:
 	call mainscreen;call to the first
+keep1:
     mov ah,7h
     int 21h
 	;check if he want the instraction screen
@@ -32,24 +34,29 @@ open_screen:
 	;check if he want to quit
 	cmp al,1bh
     je exitt
-	jmp start
+	jmp keep1
 instraction_screen:
+keep2:
     call instractionscreen
 	mov ah,7h
 	int 21h
 	cmp al,1bh
     je open_screen
-    jmp instraction_screen
+    jmp keep2
 loose:
+    MoveGrafic
     call losescreen
+keep3:
 	mov ah,7h
 	int 21h
 	cmp al,0dh
     je open_screen
-    jmp loose	
+    jmp keep3	
 play:
     ;clear the screen 
 	MoveGrafic
+	call sorts
+	;call call_for_print
 	mov dx, offset massage
 	mov ah,9h
 	int 21h
@@ -114,6 +121,7 @@ not_gussed:
 	jmp userInput
 currect:
     ;check if he got wrong somewhere
+	inc [points]
  	cmp [count],0
 	je check
 	;if he had failed the combo reset to zero
@@ -132,7 +140,9 @@ suprise:
 	mov [combo],0
 	jmp play
 exit:
-    return_to_text_mode
+    call call_for_print
+	jmp exit
+	return_to_text_mode
 	mov ax,4c00h
 	int 21h
 	END start
