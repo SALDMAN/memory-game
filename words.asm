@@ -16,9 +16,6 @@ RandLoop:
     cmp [was],bl
     je endr	
 	
-	;cmp bx,31
-	;ja again;if the random number is above 31
-
 	call get_length;to get the length of the random word 	
 	call print_Word;to print the random word
 	mov ah,9h
@@ -50,7 +47,7 @@ proc get_length
 	je case6
 	jmp elsee
 case1:
-     mov [seletedWordLen],11
+     mov [seletedWordLen],10
 	 mov [choose],1
 	 mov [was],0
 	 jmp endl
@@ -65,12 +62,12 @@ case3:
 	  mov [was],2
 	  jmp endl
 case4:
-      mov [seletedWordLen],11
+      mov [seletedWordLen],13
 	 mov [was],3
 	  mov [choose],4
 	  jmp endl
 case5:
-      mov [seletedWordLen],14
+      mov [seletedWordLen],8
 	  mov [was],4
 	  mov [choose],5
 	  jmp endl
@@ -80,12 +77,12 @@ case6:
 	  mov [choose],6
 	  jmp endl
 case7:
-      mov [seletedWordLen],11
+      mov [seletedWordLen],12
 	  mov [was],6
 	  mov [choose],7
 	  jmp endl
 case8:
-      mov [seletedWordLen],16
+      mov [seletedWordLen],11
 	  mov [was],7
 	  mov [choose],8
 	  jmp endl
@@ -122,7 +119,7 @@ elsee:
 	je case16
 	jmp iff
 case11:
-      mov [seletedWordLen],12
+      mov [seletedWordLen],13
 	  mov[was],10
 	  mov [choose],11
 	  jmp endl
@@ -247,7 +244,7 @@ case27:
 	  mov [choose],27
 	  jmp endl
 case28:
-      mov [seletedWordLen],11
+      mov [seletedWordLen],8
 	  mov [was],27
 	  mov [choose],28
 	  jmp endl
@@ -451,6 +448,7 @@ caseee32:
 endh:
      ret
 endp print_Word
+
 ;enter- none
 ;exit-  get input from the user or give 0
 proc get_input

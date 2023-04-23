@@ -37,24 +37,24 @@
 	StartMessage2 db 13,10,'counting 10 seconds. start...',13,10,'$'
     counter db 0
 	Clock equ es:6Ch
-	word1  db "hello there$"
-	word2  db "Incomprehensibility$"
+	word1  db "nonplussed$"
+	word2  db "incomprehensibility$"
 	word3  db "trichotillomania$"
-	word4  db "switch case$"
-	word5  db "very hard word$"
+	word4  db "disinterested$"
+	word5  db "abrogate$"
 	word6  db "uncopyrightable$"
-	word7  db "remember me$"
-	word8  db "computer science$"
+	word7  db "blandishment$"
+	word8  db "camaraderie$"
 	word9  db "shenanigans$"
     word10 db "bamboozle$"
-	word11 db "who are you?$"
+	word11 db "anachronistic$"
 	word12 db "bodacious$"
 	word13 db "brouhaha$"
 	word14 db "canoodle$"
 	word15 db "nincompoop$"
 	word16 db "phalanges$"
 	word17 db "taradiddle$"
-	word18 db "macaronic$";
+	word18 db "macaronic$"
 	word19 db "absquatulate$"
 	word20 db "batholith$"
 	word21 db "godwottery$"
@@ -62,9 +62,9 @@
 	word23 db "impignorate$"
 	word24 db "everywhen$"
 	word25 db "widdershins$"
-	word26 db "collywobbles$";
+	word26 db "collywobbles$"
 	word27 db "abibliophobia$"
-	word28 db "impignorate$"
+	word28 db "enormity$";
 	word29 db "bumbershoot$"
 	word30 db "flibbertigibbet$"
 	word31 db "pandiculation$"
@@ -72,9 +72,6 @@
 	choose db 0
     String db 100 dup(?)
 	countSt	db 0
-	scoreTable					db 'name.txt',0
-	bestScore					db 3 dup (?)
-	currentFile					dw ?
 	pressEnter db 0 ; 0-no enter, 1=enter
 	selectedWord dw ?
 	seletedWordLen	db ?
@@ -86,19 +83,7 @@
 	note  dw 0ac9h; 1193180/432-> (hex)
 	tell db 13,10,'wrong try again...',13,10,'$'
 	was  db 33 ; a very big num for the begining because the random is bettwen 0-31
-	points dw 0
+	points db 0
 	;Points Variables
-	isSameColor	db 0
-	gamePoints	dw 0
-	bestPoints	dw 0
-	x			db ?	; Column
-	y		    db ?	; Row
-  currentPoints dw 0
-  currentPointsColor db ?
-	digitsCount	db 0
-	tempPoints	dw 0
-	
-	; Score Table Variables
-	firstPlace	db 0
-	secondPlace db 0
-	thirdPlace	db 0
+	x			db 11	; Column
+	y		    db 33 ; Row

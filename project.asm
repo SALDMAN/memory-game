@@ -9,7 +9,6 @@ CODESEG
 	include "tmonot.asm"
 	include "time.asm"
 	include "music.asm"
-	include "score.asm"
 start:
 	mov ax, @data
 	mov ds, ax
@@ -52,11 +51,10 @@ keep3:
 	cmp al,0dh
     je open_screen
     jmp keep3	
-play:
     ;clear the screen 
-	MoveGrafic
-	call sorts
-	;call call_for_print
+	
+play:
+    MoveGrafic
 	mov dx, offset massage
 	mov ah,9h
 	int 21h
@@ -90,7 +88,6 @@ play:
 exitt:
     jmp exit
 userInput:
-	
 	takeTime
 	cmp ax, [oldTime]
 	je input
@@ -137,11 +134,10 @@ check:
 suprise:
     call music
 	;reset the combo back to 0
+	MoveGrafic
 	mov [combo],0
 	jmp play
 exit:
-    call call_for_print
-	jmp exit
 	return_to_text_mode
 	mov ax,4c00h
 	int 21h
