@@ -1,5 +1,6 @@
 include macro.asm
 IDEAL
+JUMPS
 MODEL small
 STACK 100h
 DATASEG
@@ -32,7 +33,7 @@ keep1:
     je play
 	;check if he want to quit
 	cmp al,1bh
-    je exitt
+    je exit
 	jmp keep1
 instraction_screen:
 keep2:
@@ -51,10 +52,10 @@ keep3:
 	cmp al,0dh
     je open_screen
     jmp keep3	
-    ;clear the screen 
-	
 play:
-    MoveGrafic
+    ;clear the screen 
+	MoveGrafic
+	;call call_for_print
 	mov dx, offset massage
 	mov ah,9h
 	int 21h
@@ -69,7 +70,7 @@ play:
 	int 21h
 	
 	;start to call to the timer that show the word for 10 seconds
-	call timer2
+	call timer_for_10_Sec
 	
 	
 	MoveGrafic
@@ -85,9 +86,9 @@ play:
 	mov [oldTime], ax
 	mov [ticks], 546;546*0.055=30 seconds
 	jmp userInput
-exitt:
-    jmp exit
+
 userInput:
+	
 	takeTime
 	cmp ax, [oldTime]
 	je input
@@ -118,7 +119,6 @@ not_gussed:
 	jmp userInput
 currect:
     ;check if he got wrong somewhere
-	inc [points]
  	cmp [count],0
 	je check
 	;if he had failed the combo reset to zero
@@ -134,7 +134,6 @@ check:
 suprise:
     call music
 	;reset the combo back to 0
-	MoveGrafic
 	mov [combo],0
 	jmp play
 exit:

@@ -463,7 +463,7 @@ first:
 	jmp typee
 clean_screen:
     MoveGrafic
-	mov dx,offset tell
+	mov dx,offset tellwrong
 	mov ah,9h
 	int 21h
 	jmp first
