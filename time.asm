@@ -3,22 +3,20 @@
 proc timer_for_10_Sec
 	doPush ax,es,cx
     taketime
-FirstTick2: 
+FirstTick: 
 	cmp ax, [Clock]
-	je FirstTick2
+	je FirstTick
 	; print start message
 	
 	; count 10 sec
 	mov cx,182 ;182*0.055=10 seconds
-DelayLoop2:
+DelayLoop:
 	mov ax,[Clock]
-Tick2:
+Tick:
 	cmp ax,[Clock]
-	je Tick2
-	loop DelayLoop2
+	je Tick
+	loop DelayLoop
 	
 	doPop cx,es,ax
 ret
 endp timer_for_10_Sec
-
-

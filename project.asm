@@ -18,7 +18,8 @@ start:
 	
 open_screen:
 	call mainscreen;call to the first
-keep1:
+keep_open_screen:
+    ;wait in the open screen until the player type p or i
     mov ah,7h
     int 21h
 	;check if he want the instraction screen
@@ -34,24 +35,29 @@ keep1:
 	;check if he want to quit
 	cmp al,1bh
     je exit
-	jmp keep1
+	jmp keep_open_screen
+	
 instraction_screen:
-keep2:
     call instractionscreen
+	jmp keep_instraction_screen
+
+keep_instraction_screen:
+    ;wait in the instraction screen until the player type esc
 	mov ah,7h
 	int 21h
 	cmp al,1bh
     je open_screen
-    jmp keep2
+    jmp keep_instraction_screen
 loose:
     MoveGrafic
     call losescreen
-keep3:
+keep_lose_Screen:
+    ;wait in the loose screen until the player type enter
 	mov ah,7h
 	int 21h
 	cmp al,0dh
     je open_screen
-    jmp keep3	
+    jmp keep_lose_Screen	
 play:
     ;clear the screen 
 	MoveGrafic
@@ -80,7 +86,7 @@ play:
 	mov ah,9h
 	int 21h
 	
-	
+	;start a timer for 30 seconds
 	mov [pressEnter],0
 	takeTime
 	mov [oldTime], ax
@@ -106,13 +112,14 @@ input:
 	je exit
 	cmp [pressEnter], 1 ; press enter
 	jne userInput
-	
+	;check the word
 	call check_word
 	cmp [correct], 1
 	je  not_gussed
 	jmp currect
 
 not_gussed:
+    ;if he did not gussed he can do it again until the timer will be 0
     mov [wrong],1
 	mov [pressEnter],0
 	mov [count],1
@@ -132,6 +139,7 @@ check:
 	je suprise
     jmp play
 suprise:
+    ;start the music
     call music
 	;reset the combo back to 0
 	mov [combo],0
