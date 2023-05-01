@@ -2,7 +2,8 @@
 ;exit - a music until the player taped s
 proc music
 speek:
-    ;clean the screen
+    push ax
+	;clean the screen
     MoveGrafic
 	call extra_screen
     mov ah,7h
@@ -34,6 +35,7 @@ continue:
 close:
 ; close the speaker
    CloseMic
+   pop ax
    ret
 endp music
 

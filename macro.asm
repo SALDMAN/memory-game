@@ -20,14 +20,14 @@ endm
 
 ;the macro stops the program
 wait_for_key_pressed macro
-	mov ah,00h
-	int 16h
+mov ah,00h
+int 16h
 endm
 
 ;the macro returns to the text mode
 return_to_text_mode macro
-	mov ax,3
-	int 10h
+mov ax,3
+int 10h
 endm
 
 ;the macro moves to graphic mode

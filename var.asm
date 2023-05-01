@@ -1,4 +1,4 @@
-   ;for file:
+	 ;for file:
     filehandle	dw	?
 	ErrorMsg	db	'Error', 13, 10,'$';if it cannot open the file there will be eror message
 	; for BMP:

@@ -15,7 +15,6 @@ RandLoop:
     ;check if the word repeat it self
     cmp [was],bl
     je again
-	
 	call get_length;to get the length of the random word 	
 	call print_Word;to print the random word
 	mov ah,9h
