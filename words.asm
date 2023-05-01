@@ -14,7 +14,7 @@ RandLoop:
 	
     ;check if the word repeat it self
     cmp [was],bl
-    je endr	
+    je again
 	
 	call get_length;to get the length of the random word 	
 	call print_Word;to print the random word
@@ -22,7 +22,7 @@ RandLoop:
 	int 21h	;output the word
 	jmp endr
 again:
-    ;when the random num is above 15
+    ;when the random num repeat itself
     mov [wrong],1
 	jmp endr
 endr:

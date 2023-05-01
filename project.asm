@@ -7,7 +7,7 @@ DATASEG
     include "var.asm"
 CODESEG
     include "words.asm"
-	include "tmonot.asm"
+	include "screen.asm"
 	include "time.asm"
 	include "music.asm"
 start:
@@ -135,6 +135,7 @@ currect:
 check:
     ;check if he did gussed 5 words in a row
 	inc [combo]
+	mov [combo],5
 	cmp [combo],5
 	je suprise
     jmp play
