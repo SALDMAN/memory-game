@@ -23,16 +23,7 @@ openError:
 endp OpenFile
 ;==================================================
 ;==================================================
-proc ReadFile
-	;enter- Buffer(size byte) , filehandle(size word)
-	;exit - read the file's data(move the file's data to the buffer) [the file is the table of records] 
-	mov ah,3Fh
-	mov bx,[filehandle]			;bx=file's handle
-	mov cx,48*3					;cx= amount of bytes to read [48*3 because: 3 lines. in 1 line: 20 of name + 20 of space between name and score + 5 bytes of score + 1of $ + 2 of go down a line and to its start (13,10)]
-	mov dx,offset Buffer		;dx= offset of array that file will be copied into= buffer
-	int 21h
-	ret
-endp ReadFile
+
 ;==================================================
 proc CloseFile
 	;enter- filehandle(size word)
@@ -126,8 +117,8 @@ PrintBMPLoop:
 endp BMP
 
 proc mainscreen
-	;enter- background(byte),calls BMP
-	;exit - print the sky
+	;enter- main screen(byte),calls BMP
+	;exit - print the main screen
 	mov dx,offset open
 	mov [picHigh],200
 	mov [picWidth],320
@@ -138,8 +129,8 @@ proc mainscreen
 endp mainscreen
 
 proc instractionscreen
-	;enter- unic(byte),calls BMP
-	;exit - print the unicorn
+	;enter- instraction screen(byte),calls BMP
+	;exit - print the instraction screen
 	mov dx,offset instraction	
 	mov [picHigh],200
 	mov [picWidth],320
@@ -151,8 +142,8 @@ proc instractionscreen
 endp instractionscreen
 
 proc losescreen
-	;enter- background(byte),calls BMP
-	;exit - print the sky
+	;enter- loose screen(byte),calls BMP
+	;exit - print the loose screen
 	push dx
 	mov dx,offset lose
 	mov [picHigh],200
