@@ -1,4 +1,6 @@
 8-Bit Assembly Memory Game
+
+
 📌 Overview
 Developed purely in 8-bit Assembly, this project is a highly optimized, fast-paced memory retention game. Built 3 years ago, it was designed as a deep dive into bare-metal programming, demonstrating direct hardware manipulation, strict memory management, and efficient CPU cycle utilization without the safety nets of modern high-level languages.
 
